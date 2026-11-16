@@ -34,9 +34,9 @@ int main() {
     UnloadImage(ground);
 
     Bird bird;
-    Pipe pipe;
+    PipeManager pipe_manager;
     InitBird(bird);
-    InitPipe(pipe);
+    InitPipes(pipe_manager);
 
     if (background_tex.id == 0) {
         TraceLog(LOG_ERROR, "ERRO: A imagem background.png nao foi carregada! Verifique o caminho.");
@@ -64,13 +64,13 @@ int main() {
             backgroundScroll = 0;
         }
         UpdateBird(bird, deltaTime);
-        UpdatePipe(pipe, deltaTime);
+        UpdatePipes(pipe_manager, deltaTime);
         BeginTextureMode(target);
             ClearBackground(RAYWHITE);
             DrawTexture(background_tex, -backgroundScroll, 0, WHITE);
             DrawTexture(ground_tex, -groundScroll, VIRTUAL_HEIGHT-16, WHITE);
             DrawBird(bird);
-            DrawPipe(pipe);
+            DrawPipes(pipe_manager);
         EndTextureMode();
 
         BeginDrawing();
@@ -81,6 +81,7 @@ int main() {
 
     UnloadRenderTexture(target);
     UnloadBird(bird);
+    UnloadPipes(pipe_manager);
     CloseWindow();
     return 0;
 }
