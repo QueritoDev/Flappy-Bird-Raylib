@@ -1,6 +1,7 @@
 #include <raylib.h>
 #include "../include/bird.h"
 #include "../include/constants.h"
+#include "../include/pipe.h"
 #include <iostream>
 #include <sys/types.h>
 using namespace std;
@@ -33,7 +34,9 @@ int main() {
     UnloadImage(ground);
 
     Bird bird;
+    Pipe pipe;
     InitBird(bird);
+    InitPipe(pipe);
 
     if (background_tex.id == 0) {
         TraceLog(LOG_ERROR, "ERRO: A imagem background.png nao foi carregada! Verifique o caminho.");
@@ -61,12 +64,13 @@ int main() {
             backgroundScroll = 0;
         }
         UpdateBird(bird, deltaTime);
-
+        UpdatePipe(pipe, deltaTime);
         BeginTextureMode(target);
             ClearBackground(RAYWHITE);
             DrawTexture(background_tex, -backgroundScroll, 0, WHITE);
             DrawTexture(ground_tex, -groundScroll, VIRTUAL_HEIGHT-16, WHITE);
             DrawBird(bird);
+            DrawPipe(pipe);
         EndTextureMode();
 
         BeginDrawing();
