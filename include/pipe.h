@@ -11,5 +11,6 @@ struct Pipe {
 
 void InitPipe(Pipe& pipe);
 void DrawPipe(const Pipe& pipe);
+void ResetPipe(Pipe& pipe);
 void UpdatePipe(Pipe& pipe, float dt);
 void UnloadPipe(Pipe& pipe);

@@ -16,6 +16,13 @@ void DrawPipe(const Pipe& pipe) {
 
 void UpdatePipe(Pipe& pipe, float dt) {
     pipe.position.x += pipe.pipeScroll * dt;
+    if(pipe.position.x<=0){
+        ResetPipe(pipe);
+    }
+}
+
+void ResetPipe(Pipe& pipe) {
+    InitPipe(pipe);
 }
 
 void UnloadPipe(Pipe& pipe) {
