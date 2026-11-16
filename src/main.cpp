@@ -22,14 +22,14 @@ int main() {
     Image background = LoadImage("../assets/images/background.png");
     Texture background_tex = LoadTextureFromImage(background);
     float backgroundScroll = 0;
-    const float BACKGROUND_SCROLL_SPEED = 20;
+    const float BACKGROUND_SCROLL_SPEED = 30;
     const float BACKGROUND_LOOPING_POINT = 413;
     UnloadImage(background);
 
     Image ground = LoadImage("../assets/images/ground.png");
     Texture ground_tex = LoadTextureFromImage(ground);
     float groundScroll = 0;
-    float GROUND_SCROLL_SPEED = 15;
+    float GROUND_SCROLL_SPEED = 60;
     UnloadImage(ground);
 
     Bird bird;

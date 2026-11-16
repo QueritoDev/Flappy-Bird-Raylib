@@ -10,14 +10,14 @@ void InitBird(Bird& bird) {
     bird.position = {VIRTUAL_WIDTH / 2 - bird.widthTex / 2, VIRTUAL_HEIGHT / 2 - bird.heightTex/ 2};
 
     bird.velocityY = 0.0f;
-    bird.gravityForce = 300.0f;
-    bird.jumpForce = 250.0f;
+    bird.gravityForce = 700.0f;
+    bird.jumpForce = 450.0f;
 }
 
 void GravityBird(Bird& bird, float dt) {
     bird.velocityY += bird.gravityForce * dt;
 
-    bird.velocityY = Clamp(bird.velocityY, -100.0f, 500.0f);
+    bird.velocityY = Clamp(bird.velocityY, -150.0f, 900.0f);
 
     bird.position.y += bird.velocityY * dt;
 }
