@@ -22,7 +22,7 @@ void gravityBird(Bird& bird, float dt) {
     bird.position.y += bird.velocityY * dt;
 }
 
-void UpdateBird(Bird& bird, float dt) {
+void updateBird(Bird& bird, float dt) {
     if(IsKeyPressed(KEY_UP)) {
         bird.velocityY -= bird.jumpForce;
     }

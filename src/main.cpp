@@ -4,6 +4,7 @@
 #include "../include/pipe.h"
 #include <iostream>
 #include <cstdlib>
+#include <vector>
 #include <sys/types.h>
 using namespace std;
 
@@ -36,6 +37,9 @@ int main() {
 
     Bird bird;
     initBird(bird);
+    vector<Pipe> pipes;
+    Texture2D pipe_tex = LoadTexture("../assets/images/pipe.png");
+    float spawnTimer = 0;
 
     if (background_tex.id == 0) {
         TraceLog(LOG_ERROR, "ERRO: A imagem background.png nao foi carregada! Verifique o caminho.");
@@ -55,7 +59,6 @@ int main() {
         float deltaTime = GetFrameTime();
         groundScroll = groundScroll + GROUND_SCROLL_SPEED * deltaTime;
         backgroundScroll = backgroundScroll + BACKGROUND_SCROLL_SPEED * deltaTime;
-        cout << bird.position.x << " " << bird.position.y << endl;
 
         if(groundScroll>=400) {
             groundScroll = 0;
@@ -64,10 +67,35 @@ int main() {
         if(backgroundScroll>=BACKGROUND_LOOPING_POINT) {
             backgroundScroll = 0;
         }
+
         updateBird(bird, deltaTime);
+        spawnTimer += deltaTime;
+
+        if(spawnTimer >= 2.0f) {
+            Pipe newPipe;
+            initPipe(newPipe, pipe_tex);
+            pipes.push_back(newPipe);
+            spawnTimer = 0.0f;
+        }
+
+        for (auto it = pipes.begin(); it != pipes.end();) {
+            updatePipe(*it, deltaTime);
+
+            if(it->position.x < -it->width) {
+                it = pipes.erase(it);
+            }else {
+                ++it;
+            }
+        }
+
         BeginTextureMode(target);
             ClearBackground(RAYWHITE);
             DrawTexture(background_tex, -backgroundScroll, 0, WHITE);
+
+            for (const Pipe& pipe : pipes) {
+                drawPipe(pipe);
+            }
+
             DrawTexture(ground_tex, -groundScroll, VIRTUAL_HEIGHT-16, WHITE);
             drawBird(bird);
         EndTextureMode();
@@ -77,7 +105,9 @@ int main() {
             DrawTexturePro(target.texture, sourceRec, destRec, (Vector2){0,0}, 0.0f, WHITE);
         EndDrawing();
     }
-
+    for (auto& pipe : pipes) {
+        unloadPipe(pipe);
+    }
     UnloadRenderTexture(target);
     unloadBird(bird);
     CloseWindow();
