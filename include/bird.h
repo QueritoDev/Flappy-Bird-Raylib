@@ -12,8 +12,8 @@ struct Bird {
     float velocityY;
 };
 
-void InitBird(Bird& bird);
-void GravityBird(Bird& bird, float dt);
-void UpdateBird(Bird& bird, float dt);
-void DrawBird(const Bird& bird);
-void UnloadBird(Bird& bird);
+void initBird(Bird& bird);
+void gravityBird(Bird& bird, float dt);
+void updateBird(Bird& bird, float dt);
+void drawBird(const Bird& bird);
+void unloadBird(Bird& bird);

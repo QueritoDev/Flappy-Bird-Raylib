@@ -1,47 +1,26 @@
+#include <raylib.h>
 #include "../include/pipe.h"
 #include "../include/constants.h"
-#include <raylib.h>
 
-void InitPipes(PipeManager& manager){
-    manager.texture = LoadTexture("../assets/images/pipe.png");
+void initPipe(Pipe& pipe) {
+    pipe.position.x = VIRTUAL_WIDTH;
+    pipe.tex = LoadTexture("../assets/images/pipe.png");
+    pipe.pipeScroll = -60;
+    pipe.position.y = GetRandomValue(VIRTUAL_HEIGHT / 4, VIRTUAL_HEIGHT - 10);
 
-    for(int i = 0; i< MAX_PIPES; ++i) {
-        manager.pipes[i].pipeScroll = -60;
-        manager.pipes[i].position.x = VIRTUAL_WIDTH + (i * PIPE_SPACING);
-        manager.pipes[i].position.y = GetRandomValue(VIRTUAL_HEIGHT / 2, VIRTUAL_HEIGHT - 10);
-    }
+    pipe.width = pipe.tex.width;
+}
+
+void updatePipe(Pipe& pipe, float dt) {
+    pipe.position.x = pipe.position.x + pipe.pipeScroll * dt;
+
 
 }
 
-void UpdatePipes(PipeManager& manager, float dt) {
-    for (int i = 0; i < MAX_PIPES; ++i) {
-        manager.pipes[i].position.x += manager.pipes[i].pipeScroll * dt;
-
-        if(manager.pipes[i].position.x <= -manager.texture.width){
-            float rightMostX = 0;
-            for (int j = 0; j < MAX_PIPES; j++) {
-                if (manager.pipes[j].position.x > rightMostX) {
-                    rightMostX = manager.pipes[j].position.x;
-                }
-            }
-            manager.pipes[i].position.x = rightMostX + PIPE_SPACING;
-            manager.pipes[i].position.y = GetRandomValue(VIRTUAL_HEIGHT / 2, VIRTUAL_HEIGHT - 18);
-        }
-    }
+void drawPipe(const Pipe& pipe) {
+    DrawTexture(pipe.tex, pipe.position.x, pipe.position.y, WHITE);
 }
 
-void DrawPipes(const PipeManager& manager) {
-    for (int i = 0; i < MAX_PIPES; ++i) {
-        if(i<2){
-            DrawTextureV(manager.texture, manager.pipes[i].position, WHITE);
-        }else{
-            DrawTexture(manager.texture, manager.pipes[i].position.x, -manager.pipes[i].position.y, WHITE);
-        }
+void unloadPipe(Pipe& pipe) {
 
-
-    }
-}
-
-void UnloadPipes(PipeManager& manager) {
-    UnloadTexture(manager.texture);
 }

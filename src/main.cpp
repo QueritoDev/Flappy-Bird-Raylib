@@ -3,6 +3,7 @@
 #include "../include/constants.h"
 #include "../include/pipe.h"
 #include <iostream>
+#include <cstdlib>
 #include <sys/types.h>
 using namespace std;
 
@@ -34,9 +35,7 @@ int main() {
     UnloadImage(ground);
 
     Bird bird;
-    PipeManager pipe_manager;
-    InitBird(bird);
-    InitPipes(pipe_manager);
+    initBird(bird);
 
     if (background_tex.id == 0) {
         TraceLog(LOG_ERROR, "ERRO: A imagem background.png nao foi carregada! Verifique o caminho.");
@@ -47,8 +46,10 @@ int main() {
     }
 
     if (bird.b_tex.id == 0) {
-        TraceLog(LOG_ERROR, "ERRO: A imagem ground.png nao foi carregada! Verifique o caminho.");
+        TraceLog(LOG_ERROR, "ERRO: A imagem bird.png nao foi carregada! Verifique o caminho.");
     }
+
+    srand(time(nullptr));
 
     while(!WindowShouldClose()){
         float deltaTime = GetFrameTime();
@@ -63,14 +64,12 @@ int main() {
         if(backgroundScroll>=BACKGROUND_LOOPING_POINT) {
             backgroundScroll = 0;
         }
-        UpdateBird(bird, deltaTime);
-        UpdatePipes(pipe_manager, deltaTime);
+        updateBird(bird, deltaTime);
         BeginTextureMode(target);
             ClearBackground(RAYWHITE);
             DrawTexture(background_tex, -backgroundScroll, 0, WHITE);
             DrawTexture(ground_tex, -groundScroll, VIRTUAL_HEIGHT-16, WHITE);
-            DrawBird(bird);
-            DrawPipes(pipe_manager);
+            drawBird(bird);
         EndTextureMode();
 
         BeginDrawing();
@@ -80,8 +79,7 @@ int main() {
     }
 
     UnloadRenderTexture(target);
-    UnloadBird(bird);
-    UnloadPipes(pipe_manager);
+    unloadBird(bird);
     CloseWindow();
     return 0;
 }

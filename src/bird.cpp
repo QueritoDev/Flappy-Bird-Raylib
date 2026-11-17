@@ -2,7 +2,7 @@
 #include <raylib.h>
 #include "raymath.h"
 
-void InitBird(Bird& bird) {
+void initBird(Bird& bird) {
     bird.b_tex = LoadTexture("../assets/images/bird.png");
     bird.widthTex = bird.b_tex.width;
     bird.heightTex = bird.b_tex.height;
@@ -14,7 +14,7 @@ void InitBird(Bird& bird) {
     bird.jumpForce = 450.0f;
 }
 
-void GravityBird(Bird& bird, float dt) {
+void gravityBird(Bird& bird, float dt) {
     bird.velocityY += bird.gravityForce * dt;
 
     bird.velocityY = Clamp(bird.velocityY, -150.0f, 900.0f);
@@ -27,16 +27,16 @@ void UpdateBird(Bird& bird, float dt) {
         bird.velocityY -= bird.jumpForce;
     }
 
-    GravityBird(bird, dt);
+    gravityBird(bird, dt);
 
 }
 
 
 
-void DrawBird(const Bird& bird) {
+void drawBird(const Bird& bird) {
     DrawTexture(bird.b_tex, bird.position.x, bird.position.y, WHITE);
 }
 
-void UnloadBird(Bird& bird) {
+void unloadBird(Bird& bird) {
     UnloadTexture(bird.b_tex);
 }
